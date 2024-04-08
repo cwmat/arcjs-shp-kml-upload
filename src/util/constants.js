@@ -14,8 +14,8 @@ const mapConfig = {
   references: {},
   maxZoomLevel: 20,
   minZoomLevel: 6,
-  defaultBounds: [-84.5, 33.8, -75, 36.6],
-  defaultCenter: [-79.54, 35.71],
+  defaultBounds: [-128.232422, 33.422272, -107.325439, 41.360319],
+  defaultCenter: [-117.7, 37.4],
   locateZoomScale: 72223,
 };
 

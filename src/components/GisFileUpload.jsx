@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Typography, Tabs, Tab, Box, Button } from "@mui/material";
 import ShapefileUpload from "./ShapefileUpload";
 import useMapStore from "../stores/mapStore";
+import KmlUpload from "./KmlUpload";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -118,7 +119,7 @@ export default function GisFileUpload({ handleClose }) {
 
       {/* KML Tab Content */}
       <TabPanel value={value} index={1}>
-        Hello World KML
+        <KmlUpload onValidGeoJson={handleValidGeoJson} />
       </TabPanel>
 
       {/* Add Generic Helper Text Here */}
