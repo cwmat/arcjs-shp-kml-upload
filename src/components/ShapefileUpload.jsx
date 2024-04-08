@@ -1,12 +1,28 @@
 // Assuming ShapefileUpload.js is in the same directory as your hooks folder
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import useShapefileToGeoJSON from '../hooks/useShapefileToGeoJSON';
+import validateGeoJson from '../helpers/validateGeoJson';
 import { CircularProgress } from '@mui/material';
 
-const ShapefileUpload = ({ onClose }) => {
+const ShapefileUpload = ({ onClose, onValidGeoJson }) => {
+  const [geoJsonIsValid, setGeoJsonIsValid] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const { convertToGeoJSON, loading, error, geoJson } = useShapefileToGeoJSON();
+
+  useEffect(() => {
+    if (geoJson) {
+      console.log('GeoJSON data:', geoJson);
+      const { isValid, errors } = validateGeoJson(geoJson, 50000, ['GUID']);
+      console.log(isValid, errors) // TODO: need to put these errors somewhere in UI
+      if (isValid) {
+        setGeoJsonIsValid(true);
+        onValidGeoJson(geoJson);
+      } else {
+        setGeoJsonIsValid(false);
+      }
+    }
+  }, [geoJson]);
 
   const onDrop = useCallback((acceptedFiles) => {
     setUploadedFiles(
@@ -18,14 +34,9 @@ const ShapefileUpload = ({ onClose }) => {
     );
   }, []);
 
-  const handleSubmit = async () => {
-    console.log('test');
+  const handleValidateRequest = async () => {
     if (uploadedFiles.length > 0) {
-      console.log('sending job');
       await convertToGeoJSON(uploadedFiles[0]);
-      console.log('completed job');
-      console.log(geoJson);
-      // onClose or any additional logic after conversion
     }
   };
 
@@ -47,6 +58,7 @@ const ShapefileUpload = ({ onClose }) => {
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <p>Hello World - Upload your Shapefile in .zip format</p>
         {loading && <CircularProgress size={20} />}
+        {loading && <span>loading</span>}
       </div>
       <div
         {...getRootProps()}
@@ -70,9 +82,10 @@ const ShapefileUpload = ({ onClose }) => {
           ))}
         </ul>
       </aside>
-      <button onClick={handleSubmit} disabled={loading}>
+      <button onClick={handleValidateRequest} disabled={loading}>
         Validate SHP
       </button>
+      {geoJson && <p>GeoJSON is valid: {JSON.stringify(geoJsonIsValid)}</p>}
       {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   );

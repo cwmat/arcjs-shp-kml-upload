@@ -24,6 +24,7 @@ function TabPanel(props) {
 
 export default function GisFileUpload({ handleClose }) {
   const [value, setValue] = useState(0);
+  const [currentGeoJson, setGeoJson] = useState(null);
   const [validationText, setValidationText] = useState('Validation goes here');
 
   const handleChange = (event, newValue) => {
@@ -32,8 +33,14 @@ export default function GisFileUpload({ handleClose }) {
 
   // Placeholder for submit handler
   const handleSubmit = () => {
-    setValidationText('Submit not implemented yet.');
+    handleClose();
   };
+
+  const handleValidGeoJson = (geoJson) => {
+    console.log('got it');
+    console.log(geoJson);
+    setGeoJson(geoJson);
+  }
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -50,7 +57,7 @@ export default function GisFileUpload({ handleClose }) {
 
       {/* Shapefile Tab Content */}
       <TabPanel value={value} index={0}>
-        <ShapefileUpload />
+        <ShapefileUpload onValidGeoJson={handleValidGeoJson} />
       </TabPanel>
 
       {/* KML Tab Content */}

@@ -1,4 +1,3 @@
-// hooks/useShapefileToGeoJSON.js
 import { useState } from 'react';
 import shp from 'shpjs';
 
