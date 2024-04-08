@@ -13,4 +13,5 @@ export class LayerTypes {
   static GEO_JSON = 'GeoJSONLayer';
   static MAP_IMAGE = 'MapImageLayer';
   static GROUP = 'GroupLayer';
+  static GRAPHIC = 'GraphicsLayer';
 }

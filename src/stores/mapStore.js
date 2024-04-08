@@ -35,6 +35,14 @@ const useMapStore = create((set, get) => ({
     set({ showLayer: visibile });
     get().mapManager.toggleCoreLayer(get().showLayer);
   },
+
+  updateGraphics: (graphics) => {
+    get().mapManager.updateGraphicsLayer(graphics);
+  },
+
+  clearGraphics: () => {
+    get().mapManager.clearGraphicsLayer();
+  },
 }));
 
 export default useMapStore;

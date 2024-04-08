@@ -1,12 +1,12 @@
 const mapConfig = {
   layers: {
-    earthquakes: {
-      id: 'core',
-      url: 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson',
-      type: 'GeoJSONLayer',
-      visible: true,
-      outFields: ['*'],
-    },
+    // earthquakes: {
+    //   id: 'core',
+    //   url: 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson',
+    //   type: 'GeoJSONLayer',
+    //   visible: true,
+    //   outFields: ['*'],
+    // },
     references: {},
   },
   basemapIds: ['streets-vector', 'topo-vector', 'hybrid'],

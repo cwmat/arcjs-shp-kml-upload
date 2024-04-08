@@ -4,6 +4,8 @@ import _ from 'lodash';
 import { Widgets } from '../util/widgets';
 import { LayerService } from './layerService';
 import { setupMapWidgets } from './widgets';
+import Graphic from '@arcgis/core/Graphic';
+
 
 export class MapManager {
   webmap = null;
@@ -141,5 +143,20 @@ export class MapManager {
         onClickHandler(graphic, layer);
       });
     });
+  }
+
+  updateGraphicsLayer(graphics) {
+    // Remove all existing graphics from the layer
+    this.graphicsLayer.removeAll();
+
+    // Convert each custom graphic object into an ArcGIS Graphic
+    const arcgisGraphics = graphics.graphics.map(g => new Graphic(g));
+
+    // Add the converted graphics to the layer
+    this.graphicsLayer.addMany(arcgisGraphics);
+  }
+
+  clearGraphicsLayer() {
+    this.graphicsLayer.removeAll();
   }
 }
